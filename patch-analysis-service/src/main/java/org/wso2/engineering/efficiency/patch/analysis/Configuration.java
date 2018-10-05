@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Configuration.APP_PASSWORD;
+import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Configuration.APP_USERNAME;
 import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Configuration.CONFIG_FILE_PATH;
 import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Configuration.DB_PASSWORD;
 import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Configuration.DB_USERNAME;
@@ -56,6 +58,9 @@ public class Configuration {
     private String dbUser;
     private String dbPassword;
     private String dbConnection;
+    private String appUsername;
+    private String appPassword;
+
 
     private Configuration() throws PatchAnalysisConfigurationException {
 
@@ -76,6 +81,8 @@ public class Configuration {
             this.dbUser = prop.getProperty(EEOP_USERNAME);
             this.dbPassword = prop.getProperty(EEOP_PASSWORD);
             this.dbConnection = prop.getProperty(EEOP_CONNECTION);
+            this.appPassword = prop.getProperty(APP_PASSWORD);
+            this.appUsername = prop.getProperty(APP_USERNAME);
         } catch (IOException e) {
             throw new PatchAnalysisConfigurationException("Could not read values from Properties file", e);
         }
@@ -85,11 +92,7 @@ public class Configuration {
     public static Configuration getInstance() throws PatchAnalysisConfigurationException {
 
         if (configuration == null) {
-            synchronized (Configuration.class) {
-                if (configuration == null) {
-                    configuration = new Configuration();
-                }
-            }
+            configuration = new Configuration();
         }
         return configuration;
     }
@@ -152,5 +155,15 @@ public class Configuration {
     public String getUrlToJIRAFilterInternal() {
 
         return urlToJIRAFilterInternal;
+    }
+
+    public String getAppPassword() {
+
+        return appPassword;
+    }
+
+    public String getAppUsername() {
+
+        return appUsername;
     }
 }

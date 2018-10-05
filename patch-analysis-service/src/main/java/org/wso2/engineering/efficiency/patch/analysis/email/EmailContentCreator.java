@@ -38,6 +38,7 @@ import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Ema
 import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Email.SECTION_HEADER_RELEASED;
 import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Email.SECTION_HEADER_SIGNING;
 import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Email.SECTION_HEADER_SUMMARY;
+import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Email.TABLE_TAG;
 
 /**
  * Creates and returns the body of the email.
@@ -96,7 +97,7 @@ public class EmailContentCreator {
         Collections.sort(jiraIssues);
         ArrayList<HtmlTableRow> jirasToHtml = new ArrayList<>(jiraIssues);
         table += getTableRows(jirasToHtml);
-        table += "</table>";
+        table += TABLE_TAG;
         return table;
     }
 
@@ -173,7 +174,7 @@ public class EmailContentCreator {
         String table = header + columnNames + dateColumnName + "</td></tr>";
         ArrayList<HtmlTableRow> patchesToHtml = new ArrayList<>(patches);
         table += getTableRows(patchesToHtml);
-        table += "</table>";
+        table += TABLE_TAG;
         return table;
     }
 
@@ -215,7 +216,7 @@ public class EmailContentCreator {
         ArrayList<JIRAIssue> releasedJiras = getJIRASWithReleasedPatches(jiraIssues);
         releasedJiras.sort(new ReportDateComparator());
         table += getReleasedTableRows(releasedJiras);
-        table += "</table>";
+        table += TABLE_TAG;
         return table;
     }
 

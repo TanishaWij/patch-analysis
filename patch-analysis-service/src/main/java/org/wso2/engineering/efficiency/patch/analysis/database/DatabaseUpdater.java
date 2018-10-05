@@ -172,15 +172,16 @@ public class DatabaseUpdater {
             for (JIRAIssue jiraIssue : jiraIssuesInPMT) {
                 for (Patch patch : jiraIssue.getPatches()) {
                     selectLastState.setInt(1, Integer.parseInt(patch.getPatchQueueId()));
-                    ResultSet resultSet = selectLastState.executeQuery();
-                    //check if patch has entry in State table
-                    if (resultSet.next()) {
-                        String lastState = resultSet.getString(STATE_NAME);
-                        if (checkStateChange(patch, lastState)) {
+                    try (ResultSet resultSet = selectLastState.executeQuery()) {
+                        //check if patch has entry in State table
+                        if (resultSet.next()) {
+                            String lastState = resultSet.getString(STATE_NAME);
+                            if (checkStateChange(patch, lastState)) {
+                                addToBatch(insertState, patch);
+                            }
+                        } else {
                             addToBatch(insertState, patch);
                         }
-                    } else {
-                        addToBatch(insertState, patch);
                     }
                 }
             }

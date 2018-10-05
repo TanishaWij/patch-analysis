@@ -64,7 +64,7 @@ public class Service {
             responseJSON.put(RESPONSE_MESSAGE, e.getMessage());
         }
         return Response.ok(responseJSON, MediaType.APPLICATION_JSON)
-                .header("Access-Control-Allow-origin", '*')
+                .header("Access-Control-Allow-Credentials", true)
                 .build();
     }
 
@@ -90,7 +90,7 @@ public class Service {
             responseJSON.put(RESPONSE_MESSAGE, e.getMessage());
         }
         return Response.ok(responseJSON, MediaType.APPLICATION_JSON)
-                .header("Access-Control-Allow-origin", '*')
+                .header("Access-Control-Allow-Credentials", true)
                 .build();
     }
 
@@ -116,7 +116,7 @@ public class Service {
             responseJSON.put(RESPONSE_MESSAGE, e.getMessage());
         }
         return Response.ok(responseJSON, MediaType.APPLICATION_JSON)
-                .header("Access-Control-Allow-origin", '*')
+                .header("Access-Control-Allow-Credentials", true)
                 .build();
     }
 
@@ -141,7 +141,7 @@ public class Service {
             responseJSON.put(RESPONSE_MESSAGE, e.getMessage());
         }
         return Response.ok(responseJSON, MediaType.APPLICATION_JSON)
-                .header("Access-Control-Allow-origin", '*')
+                .header("Access-Control-Allow-Credentials", true)
                 .build();
     }
 
@@ -166,7 +166,7 @@ public class Service {
             responseJSON.put(RESPONSE_MESSAGE, e.getMessage());
         }
         return Response.ok(responseJSON, MediaType.APPLICATION_JSON)
-                .header("Access-Control-Allow-origin", '*')
+                .header("Access-Control-Allow-Credentials", true)
                 .build();
     }
 
@@ -194,7 +194,6 @@ public class Service {
             responseJSON.put(RESPONSE_MESSAGE, e.getMessage());
         }
         return Response.ok(responseJSON, MediaType.APPLICATION_JSON)
-                .header("Access-Control-Allow-origin", '*')
                 .header("Access-Control-Allow-Credentials", true)
                 .build();
 
@@ -275,7 +274,6 @@ public class Service {
             responseJSON.put(RESPONSE_TYPE, ERROR);
             responseJSON.put(RESPONSE_MESSAGE, message);
             return Response.ok(responseJSON, MediaType.APPLICATION_JSON)
-                    .header("Access-Control-Allow-origin", '*')
                     .header("Access-Control-Allow-Credentials", true)
                     .build();
         }
@@ -285,7 +283,6 @@ public class Service {
         responseJSON.put(RESPONSE_TYPE, SUCCESS);
         responseJSON.put(RESPONSE_MESSAGE, message);
         return Response.ok(responseJSON, MediaType.APPLICATION_JSON)
-                .header("Access-Control-Allow-origin", '*')
                 .header("Access-Control-Allow-Credentials", true)
                 .build();
     }

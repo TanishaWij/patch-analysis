@@ -70,9 +70,10 @@ public class DatabaseAccessor {
         try (Connection con = DriverManager.getConnection(dbConnection, dbUser, dbPassword);
              PreparedStatement statement = con.prepareStatement(query)) {
             statement.setString(1, issueType);
-            ResultSet result = statement.executeQuery();
-            JSONArray jsonArray = new JSONArray();
-            return addPatches(result, jsonArray).toString();
+            try (ResultSet result = statement.executeQuery()) {
+                JSONArray jsonArray = new JSONArray();
+                return addPatches(result, jsonArray).toString();
+            }
         } catch (SQLException e) {
             throw new PatchAnalysisConnectionException("Data not extracted successfully", e);
         }
@@ -120,19 +121,21 @@ public class DatabaseAccessor {
              PreparedStatement selectJIRASWithNoActivePatches =
                      con.prepareStatement(SELECT_JIRAS_WITH_NO_ACTIVE_PATCHES)) {
             statement.setString(1, issueType);
-            ResultSet result = statement.executeQuery();
-            JSONArray jsonArray = new JSONArray();
-            while (result.next()) {
-                int columnCount = result.getMetaData().getColumnCount();
-                JSONObject jsonObject = new JSONObject();
-                for (int i = 0; i < columnCount; i++) {
-                    jsonObject.put(result.getMetaData().getColumnLabel(i + 1).toLowerCase(),
-                            result.getObject(i + 1));
+            JSONArray jsonArray;
+            try (ResultSet result = statement.executeQuery()) {
+                jsonArray = new JSONArray();
+                while (result.next()) {
+                    int columnCount = result.getMetaData().getColumnCount();
+                    JSONObject jsonObject = new JSONObject();
+                    for (int i = 0; i < columnCount; i++) {
+                        jsonObject.put(result.getMetaData().getColumnLabel(i + 1).toLowerCase(),
+                                result.getObject(i + 1));
+                    }
+                    jsonObject.put(PATCH_NAME, NO_ENTRY_IN_PMT);
+                    jsonObject.put(PRODUCT_NAME, NA);
+                    jsonObject.put(LC_STATE, NA);
+                    jsonArray.put(jsonObject);
                 }
-                jsonObject.put(PATCH_NAME, NO_ENTRY_IN_PMT);
-                jsonObject.put(PRODUCT_NAME, NA);
-                jsonObject.put(LC_STATE, NA);
-                jsonArray.put(jsonObject);
             }
             selectJIRASWithNoActivePatches.setString(1, issueType);
             return addPatches(selectJIRASWithNoActivePatches.executeQuery(), jsonArray);
@@ -189,9 +192,10 @@ public class DatabaseAccessor {
         try (Connection con = DriverManager.getConnection(dbConnection, dbUser, dbPassword);
              PreparedStatement statement = con.prepareStatement(SELECT_NUM_JIRAS)) {
             statement.setString(1, issueType);
-            ResultSet result = statement.executeQuery();
-            result.next();
-            return result.getString(1);
+            try (ResultSet result = statement.executeQuery()) {
+                result.next();
+                return result.getString(1);
+            }
         } catch (SQLException e) {
             throw new PatchAnalysisConnectionException("Total JIRA count not extracted from DB.", e);
         }

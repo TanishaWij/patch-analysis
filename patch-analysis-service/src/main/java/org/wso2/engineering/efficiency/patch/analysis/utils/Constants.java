@@ -52,6 +52,8 @@ public final class Constants {
         public static final String EEOP_USERNAME = "eeopUser";
         public static final String EEOP_PASSWORD = "eeopPassword";
         public static final String EEOP_CONNECTION = "eeopConnection";
+        public static final String APP_USERNAME =  "appUsername";
+        public static final String APP_PASSWORD = "appPassword";
     }
 
     /**
@@ -271,8 +273,6 @@ public final class Constants {
         // Response json object parameter names.
         public static final String RESPONSE_TYPE = "responseType";
         public static final String RESPONSE_MESSAGE = "responseMessage";
-        public static final String APP_USERNAME = "patch-analysis";
-        public static final String APP_PASSWORD = "BHzR@?CttH=7Q@Sk";
     }
 
     /**
@@ -508,5 +508,6 @@ public final class Constants {
                 "   </tr>\n" +
                 "</table>\n" +
                 "</body></html>\n";
+        public static final String TABLE_TAG = "</table>";
     }
 }

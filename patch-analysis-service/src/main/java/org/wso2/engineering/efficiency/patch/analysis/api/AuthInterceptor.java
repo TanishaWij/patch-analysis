@@ -1,5 +1,3 @@
-package org.wso2.engineering.efficiency.patch.analysis.api;
-
 /*
  * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -18,6 +16,11 @@ package org.wso2.engineering.efficiency.patch.analysis.api;
  * under the License.
  */
 
+package org.wso2.engineering.efficiency.patch.analysis.api;
+
+import org.apache.log4j.Logger;
+import org.wso2.engineering.efficiency.patch.analysis.Configuration;
+import org.wso2.engineering.efficiency.patch.analysis.exceptions.PatchAnalysisConfigurationException;
 import org.wso2.msf4j.security.basic.AbstractBasicAuthSecurityInterceptor;
 
 import java.util.Objects;
@@ -27,11 +30,18 @@ import java.util.Objects;
  */
 public class AuthInterceptor extends AbstractBasicAuthSecurityInterceptor {
 
+    private static final Logger LOGGER = Logger.getLogger(AuthInterceptor.class);
+
     @Override
     protected boolean authenticate(String username, String password) {
 
-        String appUsername = "patch-analysis";
-        String appPassword = "BHzR@?CttH=7Q@Sk";
-        return Objects.equals(username, appUsername) && Objects.equals(password, appPassword);
+        try {
+            Configuration configuration = Configuration.getInstance();
+            return Objects.equals(username, configuration.getAppUsername()) && Objects.equals(password,
+                    configuration.getAppPassword());
+        } catch (PatchAnalysisConfigurationException e) {
+            LOGGER.error("Could not read config file values.", e);
+        }
+        return false;
     }
 }
