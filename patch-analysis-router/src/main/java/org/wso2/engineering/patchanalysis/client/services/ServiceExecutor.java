@@ -75,7 +75,6 @@ class ServiceExecutor {
         try (CloseableHttpClient httpClient = createTrustedHttpClient()) {
             // Create the request.
             URIBuilder builder = new URIBuilder(url);
-            //builder.setParameter("username", username);
             HttpGet request = new HttpGet(builder.build());
 
             // Calling the micro service.
