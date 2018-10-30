@@ -37,7 +37,7 @@ import static org.wso2.engineering.efficiency.patch.analysis.utils.Constants.Ser
 /**
  * Main Service class which contains all the micro service endpoints.
  */
-@Path("/patchAnalysis")
+@Path("/")
 public class Service {
 
     private static final Logger LOGGER = Logger.getLogger(Service.class);

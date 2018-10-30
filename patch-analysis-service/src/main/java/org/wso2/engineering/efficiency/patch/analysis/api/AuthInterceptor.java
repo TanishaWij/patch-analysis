@@ -37,6 +37,7 @@ public class AuthInterceptor extends AbstractBasicAuthSecurityInterceptor {
 
         try {
             Configuration configuration = Configuration.getInstance();
+            LOGGER.info(configuration.getAppUsername());
             return Objects.equals(username, configuration.getAppUsername()) && Objects.equals(password,
                     configuration.getAppPassword());
         } catch (PatchAnalysisConfigurationException e) {

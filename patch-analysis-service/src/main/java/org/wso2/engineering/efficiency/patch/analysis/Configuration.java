@@ -86,7 +86,6 @@ public class Configuration {
         } catch (IOException e) {
             throw new PatchAnalysisConfigurationException("Could not read values from Properties file", e);
         }
-
     }
 
     public static Configuration getInstance() throws PatchAnalysisConfigurationException {

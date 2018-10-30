@@ -90,7 +90,7 @@ class ServiceExecutor {
             result = new JSONObject();
             result.put("responseType", "Error");
             String message = "Failed to get response from server.";
-            result.put("responseMessage", message);
+            result.put("responseMessage", e.getMessage());
             log.error(message + e.getMessage(), e);
         } catch (RouterException e) {
             result = new JSONObject();
